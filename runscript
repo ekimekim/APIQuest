@@ -5,7 +5,7 @@ pidfile="/var/run/APIQuest.pid"
 
 case "$1" in
 	start)
-		start-stop-daemon -S -m "$pidfile" -d "$path" -b --exec python -- main.py
+		start-stop-daemon -S -m -p "$pidfile" -d "$path" -b --exec python -- main.py
 		;;
 	stop)
 		start-stop-daemon -K -p "$pidfile"
