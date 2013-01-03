@@ -1,7 +1,10 @@
-from flask import request, g
+from gevent.wsgi import HTTPServer
 
 from app import app
 import character
 
+BIND = '0.0.0.0'
+PORT = 5000
+
 if __name__=='__main__':
-	app.run(host='0.0.0.0', debug=True)
+	WSGIServer((BIND, PORT), app).serve_forever()
