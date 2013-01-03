@@ -1,6 +1,8 @@
 from flask import request, abort
 from app import app
 from simplejson import dumps
+from gevent.coros import Semaphore
+import math
 
 chars = {}
 
@@ -26,10 +28,12 @@ class Character(object):
 		'GET': set([]),
 		'POST': set(['move']),
 	} # Names that are externally callable
+	move_speed = 2 # tiles/sec
 
 	def __init__(self, name):
 		self.name = name
 		self.position = [0, 0]
+		self.lock = Semaphore(1)
 
 	x = property(lambda self: self.position[0])
 	y = property(lambda self: self.position[1])
@@ -45,7 +49,10 @@ class Character(object):
 		return dumps(dict((attr, getattr(self, attr)) for attr in self.attrs), indent=4)
 
 	def _move(self, x, y):
-		"""Does the actual move, including any checks for whether its allowed."""
+		"""Does the actual move, including any checks for whether its allowed.
+		Note that moving takes time proportional to euclidian dist.
+		"""
+		gevent.sleep(math.hypot(x, y) / self.move_speed)
 		self.x += x
 		self.y += y
 
@@ -73,12 +80,14 @@ def charattr(charname, attr):
 	if attr in Character.attrs + Character.ops[request.method]:
 		if charname not in chars:
 			return "Character not found\n", 404
-		ret = getattr(chars[charname], attr)
+		char = chars[charname]
+		ret = getattr(char, attr)
 	else:
 		abort(404)
 	if attr in Character.ops[request.method]:
 		try:
-			ret = ret(**request.form)
+			with char.lock:
+				ret = ret(**request.form)
 		except TypeError:
 			abort(400)
 	return dumps(ret)
