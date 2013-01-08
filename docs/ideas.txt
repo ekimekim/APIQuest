@@ -16,14 +16,12 @@ User story
 	*** Now we must tell / teach the user to make api calls. Discuss
 
 
-Exposed Api
-========
-
-
 Game Mechanics
 ========
-	Move
-	Attack
+Move
+Attack
+
+Inventory: Weight limit. Maybe encumerance affects speed?
 
 
 Shared Data Structures
@@ -34,3 +32,16 @@ Shared Data Structures
 		pos[,] int 
 		string entityType
 	}
+
+
+
+Actions:
+Every action takes some "time". The action takes effect immediately, then the character
+cannot act for the given time.
+
+
+Characters:
+Characters spawn in a random part of the giant world.
+Hence they're very difficult to get to each other (one user's chars working together)
+You can create characters near you for resources, but they get more expensive as you buy more.
+This forces players to get creative (not just spam drones) AND encourages user cooperation.
