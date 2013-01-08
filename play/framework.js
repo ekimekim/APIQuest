@@ -1,4 +1,4 @@
-﻿var frameRate = 60;
+var frameRate = 60;
 var canvas;
 var lastTime;
 

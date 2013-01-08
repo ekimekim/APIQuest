@@ -1,4 +1,4 @@
-﻿var character = "Monty";
+var character = "Monty";
 
 var viewElapsed = 0;
 var viewPending;
@@ -13,10 +13,10 @@ var sprites = {};
 function initGame() {
     console.log("Loading start 0.8d");
 
-    sprites["player"] = loadImage("Images/entityPlayer.png");
-    sprites["orc"] = loadImage("Images/entityOrc.png");
-    sprites["skelly"] = loadImage("Images/entitySkelly.png");
-    sprites["bard"] = loadImage("Images/entityBard.png");
+    sprites["player"] = loadImage("images/entityPlayer.png");
+    sprites["orc"] = loadImage("images/entityOrc.png");
+    sprites["skelly"] = loadImage("images/entitySkelly.png");
+    sprites["bard"] = loadImage("images/entityBard.png");
 
     view();
 
